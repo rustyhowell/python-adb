@@ -43,8 +43,14 @@ signer = sign_m2crypto.M2CryptoSigner(
 device = adb_commands.AdbCommands.ConnectDevice(
     rsa_keys=[signer])
 # Now we can use Shell, Pull, Push, etc!
-for i in xrange(10):
-  print device.Shell('echo %d' % i)
+for i in range(10):
+  print(device.Shell('echo %d' % i))
+
+# Want to check the kernel version? Do this.
+print(device.Shell('uname -a'))
+
+# Want to check some properties? Do this.
+print(device.Shell('getprop | grep dalvik'))
 ```
 
 ### Pros

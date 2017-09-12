@@ -279,7 +279,7 @@ class AdbMessage(object):
     """
     msg = cls(
         command=b'CNXN', arg0=VERSION, arg1=MAX_ADB_DATA,
-        data=b'host::%s\0' % banner)
+        data=bytearray('host::%s\0' % banner, 'utf-8'))
     msg.Send(usb)
     cmd, arg0, arg1, banner = cls.Read(usb, [b'CNXN', b'AUTH'])
     if cmd == b'AUTH':
