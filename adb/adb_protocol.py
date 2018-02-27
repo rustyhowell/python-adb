@@ -277,9 +277,12 @@ class AdbMessage(object):
       InvalidResponseError: When the device does authentication in an
           unexpected way.
     """
+    # In py3, convert unicode/str to bytes. It's joined into a byte string.
+    if isinstance(banner, str):
+        banner = bytearray(banner, 'utf-8')
     msg = cls(
         command=b'CNXN', arg0=VERSION, arg1=MAX_ADB_DATA,
-        data=bytearray('host::%s\0' % banner, 'utf-8'))
+        data=b'host::%s\0' % banner, 'utf-8')
     msg.Send(usb)
     cmd, arg0, arg1, banner = cls.Read(usb, [b'CNXN', b'AUTH'])
     if cmd == b'AUTH':
